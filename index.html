@@ -1,7 +1,210 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HyperFrames, 재작업 줄이는 영상 제작 순서 | TECHTAEK</title><style>
-:root{color-scheme:light;--ink:#16253c;--muted:#52647b;--blue:#345de4;--paper:#f6f8fd;--line:#dce4f1}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 system-ui,-apple-system,sans-serif}main{max-width:1060px;margin:auto;padding:48px 24px}header{display:grid;grid-template-columns:1fr 240px;gap:24px;align-items:center}h1{font-size:clamp(2.1rem,5vw,3.8rem);line-height:1.12;letter-spacing:-.05em;margin:.3em 0}h2{font-size:1.7rem;letter-spacing:-.03em;margin:2em 0 .6em}.tag{font-weight:800;color:var(--blue);letter-spacing:.1em;font-size:.8rem}.lead{font-size:1.15rem;color:var(--muted);max-width:690px}.mascot{width:220px;height:220px;border-radius:50%;background:white url('assets/veloki.png') center / contain no-repeat;border:1px solid var(--line)}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.card,.step,.note{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}.card h3,.step h3{margin:0 0 8px}.steps{display:grid;gap:12px}.step{display:grid;grid-template-columns:48px 1fr;gap:12px}.num{font-size:1.5rem;font-weight:800;color:var(--blue)}p{margin:.4em 0}small,.muted{color:var(--muted)}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#16253c;color:#f4f7ff;border-radius:12px;padding:18px;font:14px/1.6 ui-monospace,monospace}button{border:0;background:var(--blue);color:white;border-radius:9px;padding:9px 14px;font-weight:700;cursor:pointer}.note{border-left:5px solid #f0ac4b}a{color:#284bc1}footer{border-top:1px solid var(--line);margin-top:40px;padding-top:20px;font-size:.9rem}@media(max-width:650px){main{padding:28px 16px}header{grid-template-columns:1fr}.mascot{width:150px;height:150px;grid-row:1}.grid{grid-template-columns:1fr}.step{grid-template-columns:35px 1fr}}
-</style></head><body><main><header><div><div class="tag">TECHTAEK · WORKFLOW LAB</div><h1>영상 편집을<br>한 번에 맡기지 말자</h1><p class="lead">HyperFrames로 재작업을 줄이는 핵심은 화려한 프롬프트가 아니라, 싼 검수부터 비싼 렌더까지 순서를 나누는 것.</p></div><div class="mascot" role="img" aria-label="공식 벨로키 A 캐릭터"></div></header>
-<h2>실제 화면 녹화로 확인한 변경 전과 후</h2><div class="card"><video controls playsinline preload="metadata" style="width:100%;border-radius:12px;background:#101a31" src="assets/demo.mp4"></video><p><strong>17초 · 1920×1080 · 한국어 TTS · 실제 HyperFrames 작업 화면</strong></p><p>Codex가 테스트 프로젝트의 편집 화면을 녹화하고 HyperFrames 편집 기능으로 제목·색상을 바꾼 뒤 재렌더했다. 영상은 기존 결과 → 실제 화면의 변경 → 새 결과 순서다. 마우스 조작 영상이 아니라 에이전트가 편집 기능을 호출한 기록이다.</p><p>10:31:55부터 10:35:55까지 4분: 화면 녹화 준비와 촬영, 편집, 두 차례 구성, 검사·렌더와 디코딩 확인을 포함한다. 기존 설치·기존 소스는 재사용했고 이후 HTML·원고 수정 및 독립 검수는 제외했다. 수정된 원본 렌더 16.10초, 최종 영상 검사 4.39초, 최종 렌더 15.20초다.</p><p class="muted">자동 검사 오류·경고 0개. 출력의 시간순 프레임과 전체 디코딩, 음성 신호를 확인했다. 실제 청취와 영상 전체 실시간 재생은 확인하지 못했다. 17초 사례는 제목·색상 재사용을 보여주며, 자동 컷 편집과 다른 도구 대비 속도는 검증하지 않았다. 배경음악 없음. 마지막 약 1초는 수정 후 영상의 다음 장면으로 넘어가 비교가 흐려진다.</p></div><h2>먼저 갈림길부터</h2><div class="grid"><article class="card"><h3>🎙️ 이미 찍은 영상</h3><p>받아쓰기와 타임스탬프 검수 → 러프 컷 → 말이 잘렸는지 듣기 → 자막·B롤 → 최종 출력</p></article><article class="card"><h3>🎬 새로 만드는 영상</h3><p>브랜드 명세 → 4구간 스토리보드 → 정적 화면 검수 → 모션 → 검사·출력</p></article></div>
-<h2>벨로키의 5단계 체크포인트</h2><div class="steps"><article class="step"><div class="num">01</div><div><h3>입력부터 정리</h3><p>목적, 대상, 길이, 화면비, 파일 위치와 유지해야 할 문장을 적는다. 민감한 영상은 외부 전송 여부도 확인한다.</p></div></article><article class="step"><div class="num">02</div><div><h3>말과 시간을 맞춘다</h3><p>기존 영상은 단어별 타임스탬프를 확인하고 고유명사와 잘린 단어를 고친다. 틀린 받아쓰기로 컷을 만들면 잘못된 지점이 증폭된다.</p></div></article><article class="step"><div class="num">03</div><div><h3>러프 컷 또는 스토리보드</h3><p>무음 0.25초는 빠른 편집의 출발값일 뿐. 의미 있는 쉼은 남긴다. 새 영상은 훅 → 맥락 → 결과 → 브랜드 순서로 1장면 1메시지.</p></div></article><article class="step"><div class="num">04</div><div><h3>저렴하게 먼저 확인</h3><p>기존 영상은 컷 경계를 들어보고, 새 영상은 대표 정지 화면을 확인한다. 틀린 메시지와 브랜드 색부터 수정한다.</p></div></article><article class="step"><div class="num">05</div><div><h3>자동 검사 후 사람 귀와 눈</h3><p><code>lint → check → render</code>. 출력 파일을 처음부터 끝까지 보고, 소리만 따로 들어 대사·음악·컷을 확인한다.</p></div></article></div>
-<h2>바로 복사할 지시문</h2><div class="grid"><section class="card"><h3>기존 영상 러프 컷</h3><pre id="p1">첨부한 [파일]로 [대상]을 위한 [길이] 영상을 만들어줘. 먼저 단어별 받아쓰기와 컷 후보를 보여줘. 필러, 반복, 재촬영 구간을 제거하되 의미와 강조를 보존해. 무음 0.25초는 시작 기준이며 자연스러운 쉼은 남겨. 확신이 낮은 구간은 표시하고 컷 경계를 검수할 수 있게 해줘. 원본을 보존하고 내 확인 전 최종 렌더는 하지 마.</pre><button data-copy="p1">지시문 복사</button></section><section class="card"><h3>새 영상 기획</h3><pre id="p2">[주제]를 [대상]에게 설명하는 [길이·화면비] 영상을 기획해줘. 훅·맥락·결과·브랜드 4구간으로 장면별 메시지, 화면, 자막, 시간, 필요한 자료를 표로 제안해. 지정한 브랜드 색상 [HEX], 폰트 [이름], 로고 [경로], 금지 요소 [목록]를 사용해. 먼저 스토리보드와 정지 화면만 보여주고 확인 후 모션을 만들어줘.</pre><button data-copy="p2">지시문 복사</button></section></div>
-<h2>숫자는 계약, 결과는 검수</h2><div class="note"><p><strong>음악 10%</strong>는 예시 설정이지 청감상 음량 보장은 아니다. 플레이어의 볼륨 배율인지, 음성 대비 측정된 레벨인지 먼저 명시하고 완성본을 직접 들어 조절한다. 모델의 오디오 이해 능력은 사용 환경마다 다르므로 실제 청취 여부를 확인한다.</p></div><footer>2026-10-28 확인 · <a href="https://github.com/heygen-com/hyperframes">공식 저장소</a> · <a href="https://github.com/heygen-com/hyperframes/blob/main/docs/guides/rendering.mdx">공식 렌더링 절차</a> · <a href="https://www.threads.com/@joshproductletter/post/DfBBhbVEz8g">수집한 원문</a><p>글과 벨로키 이미지의 저작권은 TECHTAEK에 있으며, HyperFrames 화면 및 상표는 해당 권리자에게 있다.</p></footer></main><script>document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(document.getElementById(b.dataset.copy).innerText);b.textContent='복사했어!'}catch{b.textContent='텍스트를 직접 선택해 복사해줘'}}));</script></body></html>
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HyperFrames, 재작업 줄이는 영상 제작 순서 | TECHTAEK</title>
+<meta name="description" content="HyperFrames 실제 편집 화면 녹화로 본 영상 전후 비교와, 기존 영상·새 영상별 검수 순서, 바로 복사할 지시문.">
+<meta property="og:title" content="영상 편집을 한 번에 맡기지 말자 — HyperFrames 작업 순서">
+<meta property="og:description" content="실제 편집 화면 녹화로 확인한 제목·색상 수정과 재렌더, 4분 실험 기록.">
+<meta property="og:image" content="https://techtaek77.github.io/hyperframes-workflow/assets/frame-edit.jpg">
+<style>
+:root{--bg:#f4f6fb;--paper:#fff;--ink:#14213a;--muted:#5a6a80;--line:#e1e7f1;--blue:#3358e0;--blue-soft:#eaf0ff;--pink:#e2457c;--amber:#f0a43a;--amber-soft:#fff5e6;--code:#121c31;--code-ink:#eef3ff;--shadow:0 1px 2px rgba(20,33,58,.05),0 8px 24px rgba(20,33,58,.06)}
+@media (prefers-color-scheme:dark){:root{--bg:#0d1422;--paper:#151f33;--ink:#e8eefb;--muted:#9aa8bf;--line:#26324a;--blue:#7b9bff;--blue-soft:#1c2a4a;--amber-soft:#2a2213;--code:#0a101c;--shadow:none}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 "Pretendard","Apple SD Gothic Neo",system-ui,-apple-system,sans-serif;word-break:keep-all;overflow-wrap:break-word}
+main{max-width:1040px;margin:auto;padding:40px 20px 56px}
+a{color:var(--blue)}
+h1,h2,h3{letter-spacing:-.03em;line-height:1.25}
+h2{font-size:clamp(1.45rem,3vw,1.8rem);margin:0 0 .3em}
+h3{font-size:1.1rem;margin:0 0 .35em}
+p{margin:.45em 0}
+section{margin-top:64px}
+.kicker{display:inline-block;font-size:.78rem;font-weight:800;letter-spacing:.12em;color:var(--blue);text-transform:uppercase;margin-bottom:6px}
+.sub{color:var(--muted);margin:0 0 22px;max-width:680px}
+.hero{display:grid;grid-template-columns:1fr 260px;gap:28px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:28px;padding:40px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,var(--blue-soft),transparent 70%)}
+.hero>*{position:relative;z-index:1}
+.hero h1{font-size:clamp(2.1rem,5.4vw,3.5rem);margin:.15em 0 .3em;letter-spacing:-.05em}
+.hero h1 em{font-style:normal;color:var(--blue)}
+.lead{font-size:1.12rem;color:var(--muted);max-width:600px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.chip{background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:6px 13px;font-size:.88rem;font-weight:600}
+.chip b{color:var(--blue)}
+.mascot{text-align:center}
+.mascot img{width:100%;max-width:220px;aspect-ratio:1;object-fit:contain;background:#fff;border-radius:50%;border:1px solid var(--line)}
+.bubble{display:inline-block;margin-top:10px;background:var(--ink);color:var(--bg);border-radius:14px;padding:8px 14px;font-size:.88rem;font-weight:600;position:relative}
+.bubble::before{content:"";position:absolute;top:-7px;left:50%;margin-left:-7px;border:7px solid transparent;border-top:0;border-bottom-color:var(--ink)}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:14px;box-shadow:var(--shadow)}
+.card video{display:block;width:100%;aspect-ratio:16/9;border-radius:12px;background:#0f1729}
+.bar{display:flex;height:34px;border-radius:10px;overflow:hidden;margin:14px 0 4px;font-size:.8rem;font-weight:700;color:#fff}
+.bar span{display:flex;align-items:center;justify-content:center;white-space:nowrap;overflow:hidden}
+.bar .b{flex:4;background:#5b6b86}.bar .e{flex:6;background:#3358e0}.bar .a{flex:7;background:#e2457c}
+.bar-scale{display:flex;justify-content:space-between;font-size:.75rem;color:var(--muted)}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.trio figure{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.trio img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+.trio figcaption{padding:10px 14px;font-size:.88rem}
+.trio figcaption b{display:block;font-size:.75rem;letter-spacing:.1em}
+.tb{color:#6b7a94}.te{color:var(--blue)}.ta{color:var(--pink)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px}
+.stat strong{display:block;font-size:1.6rem;letter-spacing:-.03em;color:var(--blue);line-height:1.2}
+.stat span{font-size:.85rem;color:var(--muted)}
+details{margin-top:14px;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px 18px}
+summary{cursor:pointer;font-weight:700}
+details ul{margin:.6em 0 0;padding-left:1.2em;color:var(--muted);font-size:.95rem}
+.fork{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.path{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:var(--shadow)}
+.path .tag{font-size:.82rem;font-weight:800;letter-spacing:.04em}
+.flow{list-style:none;padding:0;margin:12px 0 0;display:flex;flex-wrap:wrap;gap:6px 0;align-items:center}
+.flow li{background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:5px 10px;font-size:.88rem}
+.flow li+li{margin-left:22px;position:relative}
+.flow li+li::before{content:"→";position:absolute;left:-17px;color:var(--muted)}
+.flow li.check{border-color:var(--amber);background:var(--amber-soft)}
+.legend{font-size:.85rem;color:var(--muted);margin-top:10px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;border:1px solid var(--amber);background:var(--amber-soft);vertical-align:-1px;margin-right:4px}
+.steps{list-style:none;padding:0;margin:0;position:relative}
+.steps::before{content:"";position:absolute;left:23px;top:10px;bottom:10px;width:2px;background:var(--line)}
+.steps li{display:grid;grid-template-columns:48px 1fr;gap:16px;padding:8px 0}
+.num{width:48px;height:48px;border-radius:50%;background:var(--paper);border:2px solid var(--blue);color:var(--blue);display:grid;place-items:center;font-weight:800;position:relative}
+.steps .body{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px 20px}
+.cost{display:inline-block;font-size:.75rem;font-weight:700;border-radius:6px;padding:1px 7px;margin-left:6px;vertical-align:2px}
+.cheap{background:#e3f6f1;color:#0f7a63}.pricey{background:#fde8ef;color:#b02c5a}
+@media (prefers-color-scheme:dark){.cheap{background:#123a31;color:#6fe0c3}.pricey{background:#3d1a28;color:#ff9dbf}}
+.prompts{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.prompt{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:20px;display:flex;flex-direction:column;box-shadow:var(--shadow)}
+pre{flex:1;white-space:pre-wrap;background:var(--code);color:var(--code-ink);border-radius:12px;padding:16px;margin:10px 0 12px;font:13.5px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace}
+button{align-self:flex-start;border:0;background:var(--blue);color:#fff;border-radius:10px;padding:9px 16px;font:inherit;font-weight:700;cursor:pointer}
+code{background:var(--blue-soft);border-radius:6px;padding:1px 6px;font-size:.9em}
+.note{background:var(--amber-soft);border:1px solid var(--amber);border-radius:20px;padding:20px 22px}
+footer{border-top:1px solid var(--line);margin-top:64px;padding-top:22px;font-size:.88rem;color:var(--muted)}
+footer a{margin-right:10px}
+@media (max-width:760px){
+ main{padding:20px 16px 40px}
+ .hero{grid-template-columns:1fr;padding:26px 20px;border-radius:22px}
+ .mascot{order:-1;text-align:left;display:flex;align-items:center;gap:12px}
+ .mascot img{width:96px}
+ .bubble{margin:0}.bubble::before{top:50%;left:-7px;margin:-7px 0 0;border:7px solid transparent;border-left:0;border-right-color:var(--ink)}
+ .trio,.fork,.prompts{grid-template-columns:1fr}
+ .stats{grid-template-columns:1fr 1fr}
+ section{margin-top:48px}
+ .bar{font-size:.68rem}
+}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+ <div>
+  <span class="kicker">TECHTAEK · Workflow Lab</span>
+  <h1>영상 편집을<br><em>한 번에</em> 맡기지 말자</h1>
+  <p class="lead">HyperFrames로 재작업을 줄이는 핵심은 화려한 프롬프트가 아니라, <strong>싼 검수부터 비싼 렌더까지</strong> 순서를 나누는 것.</p>
+  <div class="chips">
+   <span class="chip">실험 <b>4분</b></span>
+   <span class="chip">결과 영상 <b>17초</b></span>
+   <span class="chip">자동 검사 오류 <b>0</b></span>
+   <span class="chip">바꾼 것 <b>제목·색상</b></span>
+  </div>
+ </div>
+ <div class="mascot">
+  <img src="assets/veloki.png" alt="TECHTAEK 공식 캐릭터 벨로키">
+  <span class="bubble">완성본 뒤엎기는 이제 그만…</span>
+ </div>
+</header>
+
+<section id="evidence">
+ <span class="kicker">01 · 실제 기록</span>
+ <h2>실제 화면 녹화로 본 변경 전과 후</h2>
+ <p class="sub">에이전트가 HyperFrames 편집 화면에서 제목과 글자색을 바꾸고 다시 렌더했다. 마우스 조작이 아니라 편집 기능을 호출한 기록이다.</p>
+
+ <div class="card">
+  <video controls playsinline preload="metadata" poster="assets/frame-edit.jpg" src="assets/demo.mp4"></video>
+  <div class="bar" aria-label="17초 영상 구성">
+   <span class="b">기존 0–4초</span><span class="e">편집 화면 4–10초</span><span class="a">수정 결과 10–17초</span>
+  </div>
+  <div class="bar-scale"><span>0s</span><span>17s</span></div>
+ </div>
+
+ <div class="trio">
+  <figure><img src="assets/frame-before.jpg" alt="수정 전: 민트색 제목 '영상이 되기까지'" loading="lazy"><figcaption><b class="tb">BEFORE</b>제목 “영상이 되기까지”, 민트색</figcaption></figure>
+  <figure><img src="assets/frame-edit.jpg" alt="HyperFrames 편집 화면에서 제목과 색상이 바뀐 장면" loading="lazy"><figcaption><b class="te">EDIT</b>실제 편집 화면에서 문구·색 변경</figcaption></figure>
+  <figure><img src="assets/frame-after.jpg" alt="수정 후: 분홍색 제목 '영상으로 재사용'" loading="lazy"><figcaption><b class="ta">AFTER</b>“영상으로 재사용”, 분홍색으로 재출력</figcaption></figure>
+ </div>
+
+ <div class="stats">
+  <div class="stat"><strong>4분</strong><span>녹화 준비부터 렌더·디코딩 확인까지</span></div>
+  <div class="stat"><strong>16.1초</strong><span>수정한 29초 원본 재렌더</span></div>
+  <div class="stat"><strong>4.4초</strong><span>최종 영상 <code>check</code></span></div>
+  <div class="stat"><strong>15.2초</strong><span>최종 17초 영상 <code>render</code></span></div>
+ </div>
+
+ <details>
+  <summary>이 숫자를 어디까지 믿어도 되나 (한계)</summary>
+  <ul>
+   <li>10:31:55–10:35:55 기록. 기존 설치와 기존 소스를 재사용했고, 설치 시간·이후 HTML·원고 수정·독립 검수는 4분에 없다.</li>
+   <li>제목·색상 두 가지만 바꿨다. 촬영본 자동 컷, 자막, 음악 믹싱, 다른 편집기와의 속도 비교는 하지 않았다.</li>
+   <li>자동 검사 오류·경고 0, 대비 25/25 통과. 전체 디코딩과 1초 간격 프레임은 확인했지만 실시간 재생과 귀로 듣는 검수는 못 했다.</li>
+   <li>한국어 TTS, 배경음악 없음. 마지막 약 1초는 다음 장면으로 넘어가 비교가 흐려진다.</li>
+  </ul>
+ </details>
+</section>
+
+<section id="fork">
+ <span class="kicker">02 · 갈림길</span>
+ <h2>먼저 어느 길인지부터</h2>
+ <p class="sub">이미 찍은 영상과 새로 만드는 영상은 출발점이 다르다. 한 지시문에 섞으면 편집자도 AI도 야근 예약.</p>
+ <div class="fork">
+  <div class="path">
+   <span class="tag tb">🎙️ 이미 찍은 영상</span>
+   <ul class="flow"><li class="check">받아쓰기·타임스탬프 검수</li><li>러프 컷</li><li class="check">말 잘림 듣기</li><li>자막·B롤</li><li>최종 출력</li></ul>
+  </div>
+  <div class="path">
+   <span class="tag te">🎬 새로 만드는 영상</span>
+   <ul class="flow"><li>브랜드 명세</li><li>4구간 스토리보드</li><li class="check">정지 화면 검수</li><li>모션</li><li>검사·출력</li></ul>
+  </div>
+ </div>
+ <p class="legend"><i></i>사람이 확인하는 체크포인트. 고치는 값이 가장 쌀 때 멈춘다.</p>
+</section>
+
+<section id="steps">
+ <span class="kicker">03 · 체크포인트</span>
+ <h2>벨로키의 5단계</h2>
+ <p class="sub">위에서 고칠수록 싸고, 아래로 내려갈수록 비싸다.</p>
+ <ol class="steps">
+  <li><span class="num">01</span><div class="body"><h3>입력부터 정리 <span class="cost cheap">수정 비용 낮음</span></h3><p>목적, 대상, 길이, 화면비, 파일 위치와 유지해야 할 문장을 적는다. 민감한 영상은 외부 전송 여부도 확인한다.</p></div></li>
+  <li><span class="num">02</span><div class="body"><h3>말과 시간을 맞춘다</h3><p>기존 영상은 단어별 타임스탬프를 확인하고 고유명사와 잘린 단어를 고친다. 틀린 받아쓰기로 컷을 만들면 잘못된 지점이 증폭된다.</p></div></li>
+  <li><span class="num">03</span><div class="body"><h3>러프 컷 또는 스토리보드</h3><p>무음 0.25초는 빠른 편집의 출발값일 뿐, 의미 있는 쉼은 남긴다. 새 영상은 훅 → 맥락 → 결과 → 브랜드, 1장면 1메시지.</p></div></li>
+  <li><span class="num">04</span><div class="body"><h3>저렴하게 먼저 확인</h3><p>기존 영상은 컷 경계를 들어보고, 새 영상은 대표 정지 화면을 본다. 틀린 메시지와 브랜드 색은 여기서 고친다.</p></div></li>
+  <li><span class="num">05</span><div class="body"><h3>자동 검사 후 사람 귀와 눈 <span class="cost pricey">수정 비용 높음</span></h3><p><code>lint → check → render</code>. 출력 파일을 처음부터 끝까지 보고, 소리만 따로 들어 대사·음악·컷을 확인한다.</p></div></li>
+ </ol>
+</section>
+
+<section id="prompts">
+ <span class="kicker">04 · 바로 쓰기</span>
+ <h2>복사해서 쓰는 지시문</h2>
+ <p class="sub">대괄호만 바꿔 넣으면 된다. 둘 다 “확인 전 최종 렌더 금지”가 들어 있다.</p>
+ <div class="prompts">
+  <div class="prompt"><h3>기존 영상 러프 컷</h3><pre id="p1">첨부한 [파일]로 [대상]을 위한 [길이] 영상을 만들어줘. 먼저 단어별 받아쓰기와 컷 후보를 보여줘. 필러, 반복, 재촬영 구간을 제거하되 의미와 강조를 보존해. 무음 0.25초는 시작 기준이며 자연스러운 쉼은 남겨. 확신이 낮은 구간은 표시하고 컷 경계를 검수할 수 있게 해줘. 원본을 보존하고 내 확인 전 최종 렌더는 하지 마.</pre><button data-copy="p1">지시문 복사</button></div>
+  <div class="prompt"><h3>새 영상 기획</h3><pre id="p2">[주제]를 [대상]에게 설명하는 [길이·화면비] 영상을 기획해줘. 훅·맥락·결과·브랜드 4구간으로 장면별 메시지, 화면, 자막, 시간, 필요한 자료를 표로 제안해. 지정한 브랜드 색상 [HEX], 폰트 [이름], 로고 [경로], 금지 요소 [목록]를 사용해. 먼저 스토리보드와 정지 화면만 보여주고 확인 후 모션을 만들어줘.</pre><button data-copy="p2">지시문 복사</button></div>
+ </div>
+</section>
+
+<section>
+ <div class="note">
+  <h3>숫자는 계약, 결과는 검수</h3>
+  <p><strong>음악 10%</strong>는 예시 설정이지 청감상 음량 보장이 아니다. 플레이어 볼륨 배율인지, 음성 대비 측정 레벨인지 먼저 정하고 완성본을 직접 들어 조절한다. 모델이 실제로 소리를 들을 수 있는지는 환경마다 다르니, 들었다고 가정하지 않는다.</p>
+ </div>
+</section>
+
+<footer>
+ <p>2026-10-28 확인 · <a href="https://github.com/heygen-com/hyperframes">공식 저장소</a><a href="https://github.com/heygen-com/hyperframes/blob/main/docs/guides/rendering.mdx">공식 렌더링 절차</a><a href="https://www.threads.com/@joshproductletter/post/DfBBhbVEz8g">수집한 원문</a><a href="https://techtaek.com/">TECHTAEK 블로그</a></p>
+ <p>글과 벨로키 이미지의 저작권은 TECHTAEK에 있으며, HyperFrames 화면 및 상표는 해당 권리자에게 있다.</p>
+</footer>
+</main>
+<script>
+document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',async function(){try{await navigator.clipboard.writeText(document.getElementById(b.dataset.copy).innerText);b.textContent='복사했어!'}catch(e){b.textContent='텍스트를 직접 선택해 복사해줘'}setTimeout(function(){b.textContent='지시문 복사'},2200)})});
+</script>
+</body>
+</html>
